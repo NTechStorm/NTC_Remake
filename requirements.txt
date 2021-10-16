@@ -1,0 +1,9 @@
+flask
+flask-sqlalchemy
+flask-login
+jsonpickle
+pycrypto
+requests
+werkzeug
+flask-qrcode
+stripe

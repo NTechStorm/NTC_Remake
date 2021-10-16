@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Ofline Transaction{% endblock title %}
+
+{% block body %}
+    <form action="/customtransaction/{{ buyer }}" method="POST">
+        <div class="form-group">
+            <label for="amt">Amount</label>
+            <input type="tel" class="form-control" name="amt" placeholder="Amount of coins">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="acc">Buyer Username</label>
+            <input type="text" class="form-control" id='acc' placeholder="Account" value="{{ buyer }}" readonly>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="password">Buyer Password</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Buyer password">
+        </div>
+        <br>
+        <input type="submit" class="form-control btn btn-primary" value="Confirm Transaction">
+    </form>
+{% endblock body %}

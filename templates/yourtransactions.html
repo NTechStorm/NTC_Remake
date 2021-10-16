@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} Your Transactions {% endblock title %}
+ 
+{% block body %}
+        <!-- Header-->
+       <section class="content-section bg-primary text-white text-center" id="services">
+            <div class="container px-4 px-lg-5">
+                <div class="content-section-heading">
+                    <h3 class="text-secondary mb-0">Transaction</h3>
+                    <h2 class="mb-5">Transaction Hestory</h2>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-cart-arrow-down"></i></span>
+                        <h4><strong>Send</strong></h4>
+                        {% for s in sent %}
+                        <div class="d-grid gap-2">
+                          <span class="input-group-text" id="basic-addon1">${{ s.amt }} from {{ s.reciver }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col">
+                         <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-money-bill-wave"></i></span>
+                        <h4><strong>Recieve</strong></h4>
+                        {% for r in recived %}
+                        <div class="d-grid gap-2">
+                          <span class="input-group-text" id="basic-addon1">${{ r.amt }} to {{ r.sender }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+  
+        <!-- Footer-->
+{% endblock body %}

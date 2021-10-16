@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Buy Coins{% endblock title %}
+{% block body %}
+<div class="container">
+        <form action="/checkout" method="POST">
+                <div class="form-group">
+                        <label for="amount"><h3>Amount to Buy</h3></label>
+                        <br>
+                        <input type="email" class="form-control" id="amount" name = 'amount' aria-describedby="emailHelp" placeholder="Enter the amount of coins you want to buy">
+                </div>
+                <br>
+                <script
+                        src="https://checkout.stripe.com/checkout.js"
+                        class="stripe-button"
+                        data-key="{{ key }}"
+                        data-description="A Flask Charge"
+                        data-locale="auto">
+                </script>
+        </form>
+</div>
+{% endblock %}

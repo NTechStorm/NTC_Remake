@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Sign Up {% endblock title %}
+
+{% block body %}
+<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+<h2>Sign Up</h2>
+<br>
+<form action="/signup" method="POST">
+    <label for="name">Name</label>
+    <input type="text" id = "name" name = "name" placeholder="Name" class="form-control">
+    <br>
+    <label for="username">Username</label>
+    <input type="text" id = "username" name = "username" placeholder="Username" class="form-control">
+    <br>
+    <label for="email">Email</label>
+    <input type="email" id = "email" name = "email" placeholder="Email" class="form-control">
+    <br>
+    <label for="password">Password</label>
+    <input type="password" id = "password" name = "password" placeholder="Password" class="form-control">
+    <br>
+    <!-- <div class="g-recaptcha" data-sitekey="your_site_key"></div><br/> -->
+    <input type="submit" class="btn btn-primary" class="form-control" value="Sign Up">
+</form>
+{% endblock body %}

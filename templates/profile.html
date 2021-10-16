@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Your Profile{% endblock title %}
+{% block body %} 
+        <!-- Services-->
+        <section class="content-section bg-primary text-white text-center" id="services">
+            <div class="container px-4 px-lg-5">
+                <div class="content-section-heading">
+                    <h3 class="text-secondary mb-0">Your account</h3>
+                    <h2 class="mb-5">Profile</h2>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-user-tie"></i></span>
+                        <p class="text-faded mb-0">Name</p>
+                        <h4><strong>{{ user.name }}</strong></h4> <!-- {{user}} -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-id-card-alt"></i></span>
+                        <p class="text-faded mb-0">Username</p>
+                        <h4><strong>{{ user.username }}</strong></h4> <!-- {{username}} -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-envelope"></i></span>
+                        <p class="text-faded mb-0">Email</p>
+                        <div class="d-flex justify-content-center"><h4><strong>{{ user.email }}</strong></h4></div> <!-- {{email}} -->
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-money-bill-wave"></i></span>
+                         <p class="text-faded mb-0">Amount</p>
+                        <h4><strong>{{ user.coins }} NTC</strong></h4> <!-- {{coin}} -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Callout-->
+        <section class="callout">
+            <div class="container px-4 px-lg-5 text-center">
+                <h2 class="mx-auto mb-5">
+                   YOUR QR-CODE
+                </h2>
+                <p>You can use this if you don't have internet.</p>
+                  <div class="caption">
+                  <img class="img-fluid" src="/static/qr/{{ user.id }}.jpg">
+                  </div>
+            </div>
+        </section>
+{% endblock body %} 

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+ 
+{% block title %}Send Coins {% endblock title %}
+
+{% block body %}
+        <!-- Header-->
+       <section class="content-section bg-primary text-white text-center" id="services">
+            <div class="container px-4 px-lg-5">
+                <div class="content-section-heading">
+                    <h3 class="text-secondary mb-0">Transaction</h3>
+                    <h2 class="mb-5">Send NTCoin</h2>
+                </div>
+            <form action="/basictransaction" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-id-card-alt"></i></span>
+                        <h4><strong>Send to:</strong></h4>
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1">@</span>
+                          <input type="text" class="form-control" placeholder="Username" name="reciver" id="reciver" required  aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-money-bill-wave"></i></span>
+                        <h4><strong>Amount</strong></h4>
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1">$</span>
+                          <input type="number" class="form-control" required name="amt" id="amt" placeholder="Amount" aria-label="Amount" required aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-key"></i></span>
+                        <h4><strong>Password</strong></h4>
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1">P</span>
+                          <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" aria-label="Password" aria-describedby="basic-addon1" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-cart-arrow-down"></i></span>
+                        <h4><strong>Submit to Confirm</strong></h4>
+                        <div class="d-grid gap-2">
+                          <input type="submit" class="btn btn-dark" value="Send">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </section>
+  
+        <!-- Footer-->
+{% endblock body %}
