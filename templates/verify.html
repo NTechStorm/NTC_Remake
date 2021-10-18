@@ -3,29 +3,20 @@
 {% block body %} 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <br>
-    <div class="content-section-heading">
-        <h3 class="text-secondary mb-0">Verify your account</h3>
-        <h2 class="mb-5">Verify</h2>
-    </div>
+<div class="content-section-heading">
+    <h3 class="text-secondary mb-0">Verify your account</h3>
+    <h2 class="mb-5">Verify</h2>
+</div>
+
 <form action="/verify" method="POST">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <input type="text" value="HI!" hidden>
-    <div class="d-flex justify-content-center"><div class="g-recaptcha" data-sitekey="6LdUFLIcAAAAAICzjxjDekgrGws7J7reqN1ais7y"></div></div>
-    <br/>
-    <button class="btn btn-primary" onclick="check()">Verify</button>
-  </form>
-  <script src='https://www.google.com/recaptcha/api.js'></script>
-  <script>
-      function check(){
-            if (grecaptcha.getResponse() == ""){
-                alert("You can't proceed!");
-            } 
-            else {
-                $.ajax({
-                    type: "POST",
-                    url: '/verify'
-                });
-            }
-        }
-    </script>
+    <div class="d-flex justify-content-center"><div class="g-recaptcha" data-sitekey="6LdUFLIcAAAAAICzjxjDekgrGws7J7reqN1ais7y" data-callback="enableBtn"></div></div>
+    <br>
+    <input type="submit" class="btn btn-primary" value="Submit" id="button1" disabled="disabled">
+</form>
+<script>
+    function enableBtn(){
+        document.getElementById("button1").disabled = false;
+    }
+</script>   
 {% endblock body %} 

@@ -424,8 +424,9 @@ def signup():
                 db.session.add(user)
                 db.session.commit()
                 login_user(load_user(user.id))
-                flash('Signed Up Sucsessfuly')
-                return redirect(url_for('verify'))
+                # send_mail_flask(email, 'Verify your account', 'email_temp.html')
+                flash('You have signed up. Please check your email to verify.')
+                return redirect(url_for('profile'))
             except:
                 flash('An error occurred while trying to save your user to the database. Try again.')
         else:
@@ -445,11 +446,12 @@ def logout():
 
 @app.route('/verify', methods = ['GET', 'POST'])
 def verify():
-    u2verify = current_user
     if current_user.is_authenticated:
+        user = User.query.filter_by(id = current_user.id).first()
         if request.method == 'POST':
-            u2verify.verified == 'True'
+            user.verified = 'True'
             db.session.commit()
+            flash(str(user.verified))
             return redirect(url_for('profile'))
 
         return render_template('verify.html')
