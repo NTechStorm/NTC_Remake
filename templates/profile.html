@@ -27,7 +27,7 @@
                     <div class="col-lg-3 col-md-6">
                         <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-money-bill-wave"></i></span>
                          <p class="text-faded mb-0">Amount</p>
-                        <h4><strong>{{ user.coins }} NTC</strong></h4> <!-- {{coin}} -->
+                        <h4><strong>{{ blockchain.getBalance( current_user.username ) }} NTC</strong></h4> <!-- {{coin}} -->
                     </div>
                 </div>
             </div>
@@ -38,10 +38,42 @@
                 <h2 class="mx-auto mb-5">
                    YOUR QR-CODE
                 </h2>
-                <p>You can use this if you don't have internet.</p>
+                <p>You can use this when you don't have internet.</p>
                   <div class="caption">
                   <img class="img-fluid" src="/static/qr/{{ user.id }}.jpg">
                   </div>
             </div>
         </section>
+        <!-- Bot Signup -->
+        <form action="/botsignup" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <section class="content-section bg-primary text-white text-center" id="services">
+                <div class="container px-4 px-lg-5">
+                    <div class="content-section-heading">
+                        <h3 class="text-secondary mb-0">Turn this account into a bot account</h3>
+                        <h2 class="mb-5">Bot Signup</h2>
+                    </div>
+                    <div class="row gx-4 gx-lg-5">
+                        <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
+                            <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-at"></i></i></span>
+                            <h4 class="text-faded mb-0">Email 4 Who coin go to</h4>
+                            <br>
+                            <input type="emial" class="form-control" name = 'email' id="email">
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-key"></i></span>
+                            <h4 class="text-faded mb-0">Password Confirmation</h4>
+                            <br>
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
+                            <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-money-bill-wave"></i></span>
+                            <h4 class="text-faded mb-0">Submit</h4>
+                            <br>
+                            <input type="submit" class="btn btn-info form-control" value="Signup" >
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
 {% endblock body %} 

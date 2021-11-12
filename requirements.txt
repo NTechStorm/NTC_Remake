@@ -2,8 +2,14 @@ flask
 flask-sqlalchemy
 flask-login
 jsonpickle
-pycrypto
+PyCryptodome
 requests
 werkzeug
 flask-qrcode
 stripe
+gunicorn
+flask-mail
+flask-wtf
+flask-bcrypt
+qrcode
+pillow

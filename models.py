@@ -1,23 +1,18 @@
-from NTCoin_Remake import db, login_manager
+from NTC import db, login_manager
 from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
-    __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    name = db.Column(db.String(120), nullable = False)
-    key = db.Column(db.String(120), unique=True, nullable = False)
-    password = db.Column(db.String(120), nullable = False)
-    coins = db.Column(db.Integer(), nullable=False)
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(15), unique = True, nullable=False)
+    email = db.Column(db.String(100), unique = True, nullable=False)
+    name = db.Column(db.String(35), unique = False, nullable=False)
+    key = db.Column(db.String(100000), unique = True, nullable=False)
+    password = db.Column(db.String(120), unique = False, nullable=False)
+    verified = db.Column(db.String(5), nullable = False)
+    authentication = db.Column(db.String(10), nullable = False)
 
-    def __init__(self, username, email, name, key, password, coins):
-        self.username = username
-        self.email = email
-        self.name = name
-        self.key = key
-        self.password = password
-        self.coins = coins
+    def __repr__(self):
+        return f"User('{self.name}', '{self.username}', '{self.email}')"
 
 class BlockchainDB(db.Model):
     id = db.Column(db.Integer, primary_key=True)
