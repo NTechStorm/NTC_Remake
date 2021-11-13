@@ -27,7 +27,7 @@
                     <div class="col-lg-3 col-md-6">
                         <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-money-bill-wave"></i></span>
                          <p class="text-faded mb-0">Amount</p>
-                        <h4><strong>{{ blockchain.getBalance( current_user.username ) }} NTC</strong></h4> <!-- {{coin}} -->
+                        <h4><strong>{{ blockchainObj.getBalance( current_user.username ) }} NTC</strong></h4> <!-- {{coin}} -->
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 </h2>
                 <p>You can use this when you don't have internet.</p>
                   <div class="caption">
-                  <img class="img-fluid" src="/static/qr/{{ user.id }}.jpg">
+                  <img class="img-fluid" src="../static/qr/{{ user.id }}.jpg">
                   </div>
             </div>
         </section>

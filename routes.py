@@ -13,7 +13,7 @@ import qrcode
 from flask_mail import Message
 from flask_wtf.csrf import CSRFProtect
 
-from NTC import app, db, blockchain, bcrypt, blockchainObj, qr
+from NTC import app, db, blockchain, bcrypt, blockchainObj, qr, stripe_keys
 from NTC.models import User, BlockchainDB, Transactions, load_user
 
 db.create_all()
@@ -25,12 +25,7 @@ def unauthorized(e):
 
 @app.route('/')
 def index():
-    if current_user.is_authenticated:
-        if current_user.authentication == 'bot':
-            flash("You have a bot account. You don't need this")
-            return redirect('customtransaction/hi')
-    else:
-        return render_template('index.html')
+    return render_template('index.html')
 
 @app.route('/basictransaction', methods = ['GET', 'POST'])
 @login_required
@@ -50,17 +45,13 @@ def basictransaction():
                 fee = int(amt)*0.02
                 feedamt = int(amt)-int(fee)
                 if check_password_hash(current_user.password, password):
-                    if int(current_user.coins) >= int(amt):
+                    if int({{ blockchainObj.getBalance( current_user.username ) }}) >= int(amt):
                         reciverdb = User.query.filter_by(username = reciver).first()
                         if reciverdb == None:
                             flash('Unable to find username')
                             return redirect(url_for('basictransaction'))
                         else:
                             blockchainObj.addTransaction(current_user.username, reciver, amt)
-                            user = User.query.filter_by(username = current_user.username).first()
-                            user.coins = int(user.coins) - int(feedamt)
-                            reciverdb.coins = int(reciverdb.coins) + int(feedamt)
-                            db.session.commit()
                             flash('Sucsessfuly transfered '+ str(feedamt) +' coins to '+ reciverdb.username)
                             return redirect(url_for('basictransaction'))
                     else:
@@ -86,16 +77,12 @@ def customtransaction(buyer):
             feedamt = int(amt)-int(fee)
             recieverdb = User.query.filter_by(username = reciver).first()
             if check_password_hash(recieverdb.password, password):
-                if int(recieverdb.coins) >= int(amt):
+                if int({{ blockchainObj.getBalance( current_user.username ) }}) >= int(amt):
                     if recieverdb == None:
                         flash('Unable to find username')
                         return redirect(buyer)
                     else:
                         blockchainObj.addTransaction(recieverdb.username, current_user.username, amt)
-                        user = User.query.filter_by(username = current_user.username).first()
-                        recieverdb.coins = int(recieverdb.coins) - int(feedamt)
-                        user.coins = int(user.coins) + int(feedamt)
-                        db.session.commit()
                         flash('Sucsessfuly transfered '+ str(feedamt) +' coins to '+ current_user.username)
                         return redirect(buyer)
                 else:
@@ -111,14 +98,14 @@ def customtransaction(buyer):
 def profile():
     if current_user.verified == 'False':
         flash('Get verified to use the site.')
-        return redirect(url_for('verify'))
+        return render_template('verify.html')
     elif current_user.authentication == 'bot':
         flash("You have a bot account. You don't need this")
         return redirect('customtransaction/hi')
     else: 
         customtranslink = qrcode.make('http://192.168.0.102:8000/customtransaction/' + current_user.username)
-        customtranslink.save('static/qr/'+str(current_user.id)+'.jpg')
-        return redirect(url_for('profile'))
+        customtranslink.save('NTC/static/qr/'+str(current_user.id)+'.jpg')
+        return render_template('profile.html', user = current_user, blockchainObj = blockchainObj)
 
 @app.route('/editprofile')
 @login_required
@@ -177,9 +164,7 @@ def checkout():
             currency='usd',
             description='Flask Charge'
         )
-        blockchainObj.addTransaction(blockchainObj(), 'Admin', current_user.username, coinamount)
-        user = User.query.filter_by(username = current_user.username).first()
-        user.coins = int(user.coins) + coinamount
+        blockchainObj.addTransaction('Admin', current_user.username, coinamount)
         db.session.commit()
         flash('Thanks! You bought '+ str(coinamount) + ' coins!')
         return redirect(url_for('buy'))
@@ -226,7 +211,7 @@ def signup():
                 qr.add_data('http://127.0.0.1:8000/customtransaction/'+ current_user.username)
                 qr.make(fit=True)
                 img = qr.make_image(fill_color="black", back_color="white")
-                img.save('hi.png')
+                img.save('NTC/static/qr/'+ str(current_user.id) +'.png')
                 flash('You have signed up. Please check your email to verify.')
                 return redirect(url_for('profile'))
             except:
